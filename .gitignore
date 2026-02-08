@@ -1,0 +1,15 @@
+# Xcode build artifacts
+DerivedData/
+build/
+*.xcodeproj/xcuserdata/
+*.xcworkspace/xcuserdata/
+
+# Swift Package Manager
+.build/
+.swiftpm/
+
+# macOS system files
+.DS_Store
+
+# Debug logs
+/tmp/window-resizer-debug.log
