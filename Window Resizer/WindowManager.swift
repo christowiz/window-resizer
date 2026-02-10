@@ -13,12 +13,23 @@ enum Layout: String, CaseIterable {
 
     var menuTitle: String {
         switch self {
-        case .leftHalf:   return "← Left Half"
-        case .rightHalf:  return "→ Right Half"
-        case .topHalf:    return "↑ Top Half"
-        case .bottomHalf: return "↓ Bottom Half"
-        case .fullScreen: return "□ Full Screen"
-        case .center75:   return "◻ Center (75%)"
+        case .leftHalf:   return "Left Half"
+        case .rightHalf:  return "Right Half"
+        case .topHalf:    return "Top Half"
+        case .bottomHalf: return "Bottom Half"
+        case .fullScreen: return "Full Screen"
+        case .center75:   return "Center (75%)"
+        }
+    }
+
+    var icon: String {
+        switch self {
+        case .leftHalf:   return "rectangle.lefthalf.filled"
+        case .rightHalf:  return "rectangle.righthalf.filled"
+        case .topHalf:    return "rectangle.tophalf.filled"
+        case .bottomHalf: return "rectangle.bottomhalf.filled"
+        case .fullScreen: return "rectangle.inset.filled"
+        case .center75:   return "rectangle.center.inset.filled"
         }
     }
 
@@ -92,6 +103,37 @@ enum WindowManager {
         }
 
         return resized
+    }
+
+    /// Move all standard windows of the given application to the specified
+    /// screen, applying the given layout on that screen.
+    @discardableResult
+    static func moveAllWindows(
+        of app: NSRunningApplication,
+        to targetScreen: NSScreen,
+        layout: Layout = .leftHalf
+    ) -> Int {
+        guard let primaryScreen = NSScreen.screens.first else { return 0 }
+        let primaryHeight = primaryScreen.frame.height
+        let appRef = AXUIElementCreateApplication(app.processIdentifier)
+
+        guard let windows = copyWindows(from: appRef) else { return 0 }
+
+        let targetFrame = layout.frame(
+            for: targetScreen.visibleFrame,
+            primaryScreenHeight: primaryHeight
+        )
+
+        var moved = 0
+
+        for window in windows {
+            guard isStandardWindow(window) else { continue }
+            setPosition(of: window, to: targetFrame.origin)
+            setSize(of: window, to: targetFrame.size)
+            moved += 1
+        }
+
+        return moved
     }
 
     // MARK: - AX Helpers
