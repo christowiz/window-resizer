@@ -202,8 +202,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
         let origins = screens.map { $0.frame.origin }
 
-        let uniqueX = Set(origins.map { $0.x }).count
-        let uniqueY = Set(origins.map { $0.y }).count
+//        let uniqueX = Set(origins.map { $0.x }).count
+//        let uniqueY = Set(origins.map { $0.y }).count
 
         // Sort indices by x then y to determine relative position
         let sortedByX = origins.enumerated().sorted { $0.element.x < $1.element.x }
