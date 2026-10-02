@@ -2,6 +2,16 @@
 
 A lightweight macOS menu bar app that resizes and repositions all windows of the previously active application to a chosen layout. Built with Swift and AppKit.
 
+## Problem
+
+In the course of the day my windows often become resized and moved around for various reasons:
+
+- Application window moved to second screen
+- Application launches in incorrect display (i.e. not main) after disconnecting and connecting external display
+- Windows repositioned and/or resized throughout the course of the day
+
+My normal work setup is some apps are left-aligned while others are right-aligned on a single display.  To tidy my UI I have to move all application windows to a single display.  Normally this is pretty brutal when I have 20 browser windows open (don't lie, you know you do to).  There are most definitely a multitude of fully featured macOS management window utilities out there (I'm a fervent user of [Rectangle]((https://rectangleapp.com/)) but none that I could find that would solve this particular need (that were free) so I created this very simple utility.
+
 ## Features
 
 - **Menu bar app** — runs as a status bar icon with no Dock presence
